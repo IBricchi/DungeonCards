@@ -1,8 +1,8 @@
 {
-    "name": "Controls",
+    "name": "InputMaster",
     "maps": [
         {
-            "name": "Character",
+            "name": "Player",
             "id": "9651f974-4302-437d-acf7-93886dbdfa4f",
             "actions": [
                 {
@@ -71,7 +71,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "LJoy",
+                    "name": "L-Joy",
                     "id": "246e15db-41b9-4dcf-8fa6-3f703934431b",
                     "path": "2DVector",
                     "interactions": "",
