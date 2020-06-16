@@ -86,7 +86,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": ""L-Joy"",
                     ""id"": ""246e15db-41b9-4dcf-8fa6-3f703934431b"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

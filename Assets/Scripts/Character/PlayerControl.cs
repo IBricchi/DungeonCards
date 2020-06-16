@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
 {
 	private InputMaster c;
-	private CharacterController cc;
-	private float speed = 10f;
+	private Rigidbody2D rb;
+	public float speed = 10f;
 	Vector2 dir = Vector2.zero;
 
 	private void Awake()
 	{
 		c = new InputMaster();
-		cc = GetComponent<CharacterController>();
+		rb = GetComponent<Rigidbody2D>();
 	}
 
 	private void OnEnable()
@@ -32,7 +32,7 @@ public class PlayerControl : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		cc.Move(dir * speed * Time.fixedDeltaTime);
+		rb.velocity = dir * speed;
 	}
 
 	private void UpdateDir(Vector2 _dir)
