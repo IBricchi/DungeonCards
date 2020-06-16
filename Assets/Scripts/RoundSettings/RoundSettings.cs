@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameSettings : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public struct RoundSettings{
+	readonly MovementID moveId;
+	public MovementInfo moveInfo;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public RoundSettings(MovementID _moveId = MovementID.def){
+		moveId = _moveId;
+		moveInfo = MovementSettings.GetMovement(moveId);
+	}
 }

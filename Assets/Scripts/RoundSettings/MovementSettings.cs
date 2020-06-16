@@ -2,36 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct MovementType{
+public struct MovementInfo{
 	public float maxSpeed;
 	public float acceleration;
 	public float deceleration;
 
-	public MovementType(float _maxSpeed, float _acceleartion, float _deceleration){
+	public MovementInfo(float _maxSpeed, float _acceleartion, float _deceleration){
 		maxSpeed = _maxSpeed;
 		acceleration = _acceleartion;
 		deceleration = _deceleration;
 	}
 }
-public class MovementSettings
+public static class MovementSettings
 {
-	private static MovementType def = new MovementType(20, 10, 20);
-	private static MovementType fast = new MovementType(20, 10, 20);
+	private static MovementInfo def = new MovementInfo(20, 10, 20);
+	private static MovementInfo fast = new MovementInfo(20, 10, 20);
 
-	public MovementType GetMovement(MovementID id){
-		MovementType outMovement;
+	public static MovementInfo GetMovement(MovementID id){
 		switch(id){
 			case MovementID.def:
-				outMovement = def;
+				return def;
 				break;
 			case MovementID.fast:
-				outMovement = fast;
+				return fast;
 				break;
 			default:
 				Debug.LogWarning("Non supported MovmentID asked for movement type, default returned");
-				outMovement = def;
+				return def;
 				break;
 		}
-		return outMovement;
 	}
 }
