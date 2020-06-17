@@ -7,15 +7,17 @@ using UnityEngine;
 public class simpleFollower : MonoBehaviour
 {
 	// basic information
-	private float speed;
+	private GameObject body;
+	public float speed;
 	private Vector2 moveDir;
+	private Vector2 pos;
+	private Vector2 vel;
 
 	// visusals
-	public Sprite idleSprite;
-	public SpriteRenderer sr;
+	private Sprite idleSprite;
+	private SpriteRenderer sr;
 
 	// physics simulations
-	private GameObject body;
 	private Rigidbody2D rb;
 	private Collider2D bc;
 
@@ -24,7 +26,11 @@ public class simpleFollower : MonoBehaviour
 	private Vector2 target;
 	private void Awake()
 	{
+		// basic information
 		body = new GameObject();
+		speed = 100f;
+		moveDir = Vector2.zero;
+		vel = Vector2.zero;
 
 		// visuals
 		idleSprite = Resources.Load<Sprite>("Art/Enemies/simpleFollower/idle");
@@ -34,7 +40,6 @@ public class simpleFollower : MonoBehaviour
 		// physics
 		rb = body.AddComponent<Rigidbody2D>();
 		bc = body.AddComponent<PolygonCollider2D>();
-
 	}
 	private void Start()
 	{
@@ -43,12 +48,15 @@ public class simpleFollower : MonoBehaviour
 		target = player.transform.position;
 
 		// setup some physics
-		rb.gravityScale = 0;	
+		rb.gravityScale = 0;
 	}
 
 	private void FixedUpdate()
 	{
-		moveDir = target - (Vector2) transform.position;
-		
+		target = player.transform.position;
+
+		moveDir = target - (Vector2) body.transform.position;
+		vel = moveDir / moveDir.magnitude * speed;
+		rb.velocity = vel * Time.fixedDeltaTime;
 	}
 }
