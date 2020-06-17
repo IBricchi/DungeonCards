@@ -45,18 +45,23 @@ public class simpleFollower : MonoBehaviour
 	{
 		// get player
 		player = GameObject.FindGameObjectWithTag("Player");
-		target = player.transform.position;
 
 		// setup some physics
 		rb.gravityScale = 0;
+		rb.freezeRotation = true;
 	}
 
 	private void FixedUpdate()
 	{
+		// get player position
 		target = player.transform.position;
 
+		// get movement info and move
 		moveDir = target - (Vector2) body.transform.position;
 		vel = moveDir / moveDir.magnitude * speed;
 		rb.velocity = vel * Time.fixedDeltaTime;
+
+		// get direction info and turn
+		body.transform.up = moveDir;
 	}
 }
