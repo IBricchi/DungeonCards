@@ -972,7 +972,7 @@ GameObject:
   - component: {fileID: 1349997865}
   m_Layer: 0
   m_Name: Settings
-  m_TagString: Untagged
+  m_TagString: Settings
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1272,6 +1272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7533540ccba9cb044b81e1ec0da6e378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 0
+  acceleration: 0
+  deceleration: 0
+  stopThreshold: 0
 --- !u!50 &2058074374
 Rigidbody2D:
   serializedVersion: 4

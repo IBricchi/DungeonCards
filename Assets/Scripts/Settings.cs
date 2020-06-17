@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
-	private MovementID moveId = MovementID.fast;
+	private MovementID moveId = MovementID.def;
 
 	private RoundSettings rs;
 	public MovementInfo GetMovementSettings()

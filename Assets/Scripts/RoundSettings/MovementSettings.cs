@@ -17,8 +17,8 @@ public struct MovementInfo{
 }
 public static class MovementSettings
 {
-	private static MovementInfo def = new MovementInfo(10f, 5f, 7f, 6f);
-	private static MovementInfo fast = new MovementInfo(20f, 7f, 12f, 6f);
+	private static MovementInfo def = new MovementInfo(10f, 5f, 10f, 6f);
+	private static MovementInfo fast = new MovementInfo(15f, 7f, 3f, 8f);
 
 	public static MovementInfo GetMovement(MovementID id){
 		switch(id){
