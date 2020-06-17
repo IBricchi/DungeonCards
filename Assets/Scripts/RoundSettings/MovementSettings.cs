@@ -6,17 +6,19 @@ public struct MovementInfo{
 	public float maxSpeed;
 	public float acceleration;
 	public float deceleration;
+	public float stopThreshold;
 
-	public MovementInfo(float _maxSpeed, float _acceleartion, float _deceleration){
+	public MovementInfo(float _maxSpeed, float _acceleartion, float _deceleration, float _stopThreshold){
 		maxSpeed = _maxSpeed;
 		acceleration = _acceleartion;
 		deceleration = _deceleration;
+		stopThreshold = _stopThreshold;
 	}
 }
 public static class MovementSettings
 {
-	private static MovementInfo def = new MovementInfo(20, 10, 20);
-	private static MovementInfo fast = new MovementInfo(20, 10, 20);
+	private static MovementInfo def = new MovementInfo(10f, 5f, 7f, 6f);
+	private static MovementInfo fast = new MovementInfo(20f, 7f, 12f, 6f);
 
 	public static MovementInfo GetMovement(MovementID id){
 		switch(id){
