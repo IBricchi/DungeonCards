@@ -17,14 +17,14 @@ public class SimpleFollower : Enemy
 
 	// visusals
 	private Sprite idleSprite;
-	private SpriteRenderer sr;
 
 	// physics simulations
 	private Rigidbody2D rb;
 
 	// player information
 	private Vector2 target;
-	private void Awake()
+
+	public override void Awake()
 	{
 		// setup basic enemy information
 		Setup(size, true);
@@ -35,16 +35,18 @@ public class SimpleFollower : Enemy
 		moveDir = Vector2.zero;
 		vel = Vector2.zero;
 
-		// visuals
-		idleSprite = Resources.Load<Sprite>("Art/Enemies/simpleFollower/idle");
-		sr = srs[0];
-		sr.sprite = idleSprite;
-
 		// physics
 		rb = rbs[0];
 	}
 
-	private void FixedUpdate()
+	protected override void SetupSprites()
+	{
+		idleSprite = Resources.Load<Sprite>("Art/Enemies/simpleFollower/idle");
+		srs[0] = bodies[0].AddComponent<SpriteRenderer>();
+		srs[0].sprite = idleSprite;
+	}
+
+	public override void FixedUpdate()
 	{
 		// get player position
 		target = player.transform.position;
