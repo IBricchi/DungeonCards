@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEditor.U2D;
 using UnityEngine;
 
-public class simpleFollower : MonoBehaviour
+public class SimpleFollower : Enemy
 {
 	// basic information
+	private int size = 1;
+	
 	private GameObject body;
 	public float speed;
 	private Vector2 moveDir;
@@ -19,36 +21,27 @@ public class simpleFollower : MonoBehaviour
 
 	// physics simulations
 	private Rigidbody2D rb;
-	private Collider2D bc;
 
 	// player information
-	GameObject player;
 	private Vector2 target;
 	private void Awake()
 	{
+		// setup basic enemy information
+		Setup(size, true);
+
 		// basic information
-		body = new GameObject();
+		body = bodies[0];
 		speed = 100f;
 		moveDir = Vector2.zero;
 		vel = Vector2.zero;
 
 		// visuals
 		idleSprite = Resources.Load<Sprite>("Art/Enemies/simpleFollower/idle");
-		sr = body.AddComponent<SpriteRenderer>();
+		sr = srs[0];
 		sr.sprite = idleSprite;
 
 		// physics
-		rb = body.AddComponent<Rigidbody2D>();
-		bc = body.AddComponent<PolygonCollider2D>();
-	}
-	private void Start()
-	{
-		// get player
-		player = GameObject.FindGameObjectWithTag("Player");
-
-		// setup some physics
-		rb.gravityScale = 0;
-		rb.freezeRotation = true;
+		rb = rbs[0];
 	}
 
 	private void FixedUpdate()
