@@ -15,22 +15,22 @@ public struct MovementInfo{
 		stopThreshold = _stopThreshold;
 	}
 }
-public static class MovementSettings
+public struct MovementSettings
 {
-	private static MovementInfo def = new MovementInfo(10f, 5f, 10f, 6f);
+	private static MovementInfo walk = new MovementInfo(10f, 5f, 10f, 6f);
 	private static MovementInfo fast = new MovementInfo(15f, 7f, 3f, 8f);
 
 	public static MovementInfo GetMovement(MovementID id){
 		switch(id){
-			case MovementID.def:
-				return def;
+			case MovementID.walk:
+				return walk;
 				break;
 			case MovementID.fast:
 				return fast;
 				break;
 			default:
 				Debug.LogWarning("Non supported MovmentID asked for movement type, default returned");
-				return def;
+				return walk;
 				break;
 		}
 	}

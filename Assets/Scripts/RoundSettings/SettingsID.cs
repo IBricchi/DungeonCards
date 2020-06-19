@@ -1,5 +1,11 @@
 ﻿public enum MovementID{
-	def,
+	walk,
 	fast,
 	ice
+}
+
+public enum EnemyID{
+	none,
+	simpleFollower,
+	simpleShooter
 }

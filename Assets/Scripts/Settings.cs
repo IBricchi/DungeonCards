@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
-	private MovementID moveId;
-	private Enemy enemy;
+	private MovementID moveID;
+	private EnemyID enemyID;
+	private Enemy[] enemies;
 
 	private RoundSettings rs;
 	public MovementInfo GetMovementSettings()
@@ -14,19 +16,28 @@ public class Settings : MonoBehaviour
 	}
 	private void Awake()
 	{
-		moveId = MovementID.def;
-		rs = new RoundSettings(moveId);
-		enemy = new SimpleFollower();
-		enemy.Awake();
+		moveID = MovementID.walk;
+		enemyID = EnemyID.simpleFollower;
+		rs = new RoundSettings(moveID, enemyID);
+
+		enemies = new Enemy[2];
+		for(int i = 0; i < enemies.Length; i++){
+			enemies[i] = rs.CreateEnemy();
+			enemies[i].Awake();
+		}
 	}
 
 	private void Start()
 	{
-		enemy.SetPosition(10, 5);
+		enemies[0].SetPosition(10, 5);
+		enemies[1].SetPosition(10, 0);
 	}
 
 	private void FixedUpdate()
 	{
-		enemy.FixedUpdate();
+		foreach (Enemy enemy in enemies)
+		{
+			enemy.FixedUpdate();
+		}
 	}
 }
