@@ -22,7 +22,7 @@ public class Settings : MonoBehaviour
 
 	private void Start()
 	{
-		enemy.SetPosition(100, 50);
+		enemy.SetPosition(10, 5);
 	}
 
 	private void FixedUpdate()

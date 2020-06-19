@@ -62,9 +62,10 @@ public abstract class Enemy
 
 	public virtual void SetPosition(float x, float y)
 	{
-		foreach (GameObject body in bodies)
+		Vector3 pos = new Vector3(x, y, 0);
+		foreach (Rigidbody2D rb in rbs)
 		{
-			body.transform.position.Set(x, y, 0);
+			rb.transform.position = pos;
 		}
 	}
 }
