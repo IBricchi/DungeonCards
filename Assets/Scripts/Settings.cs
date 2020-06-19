@@ -6,8 +6,11 @@ using UnityEngine;
 public class Settings : MonoBehaviour
 {
 	private MovementID moveID;
+	
 	private EnemyID enemyID;
 	private Enemy[] enemies;
+
+	private Dash combat;
 
 	private RoundSettings rs;
 	public MovementInfo GetMovementSettings()
@@ -17,7 +20,11 @@ public class Settings : MonoBehaviour
 	private void Awake()
 	{
 		moveID = MovementID.walk;
+
 		enemyID = EnemyID.simpleFollower;
+
+		combat = new Dash();
+
 		rs = new RoundSettings(moveID, enemyID);
 
 		enemies = new Enemy[2];
@@ -25,6 +32,8 @@ public class Settings : MonoBehaviour
 			enemies[i] = rs.CreateEnemy();
 			enemies[i].Awake();
 		}
+
+		combat.Awake();
 	}
 
 	private void Start()
@@ -39,5 +48,7 @@ public class Settings : MonoBehaviour
 		{
 			enemy.FixedUpdate();
 		}
+
+		combat.FixedUpdate();
 	}
 }
