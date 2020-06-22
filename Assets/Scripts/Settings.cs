@@ -41,7 +41,7 @@ public class Settings : MonoBehaviour
 		canvasGR = canvasBody.AddComponent<GraphicRaycaster>();
 
 
-		combat = new Dash(player, canvasBody);
+		combat = new Dash(this, player, canvasBody);
 
 		enemies = new Enemy[2];
 		for(int i = 0; i < enemies.Length; i++){
@@ -74,6 +74,22 @@ public class Settings : MonoBehaviour
 		foreach (Enemy enemy in enemies)
 		{
 			enemy.FixedUpdate();
+		}
+	}
+
+	public void StopEnemyPhysicsCollisions()
+	{
+		foreach(Enemy enemy in enemies)
+		{
+			enemy.StopPhysicsCollisions();
+		}
+	}
+
+	public void StartEnemyPhysicsCollisions()
+	{
+		foreach(Enemy enemy in enemies)
+		{
+			enemy.StartPhysicsCollisions();
 		}
 	}
 }

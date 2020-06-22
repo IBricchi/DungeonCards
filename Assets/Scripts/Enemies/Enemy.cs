@@ -69,4 +69,20 @@ public abstract class Enemy
 			rb.transform.position = pos;
 		}
 	}
+
+	public virtual void StopPhysicsCollisions()
+	{
+		foreach(Collider2D pc in pcs)
+		{
+			pc.isTrigger = true;
+		}
+	}
+
+	public virtual void StartPhysicsCollisions()
+	{
+		foreach (Collider2D pc in pcs)
+		{
+			pc.isTrigger = false;
+		}
+	}
 }
