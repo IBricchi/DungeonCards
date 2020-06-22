@@ -14,7 +14,9 @@ public class Settings : MonoBehaviour
 	private GraphicRaycaster canvasGR;
 
 	private MovementID moveID;
-	
+
+	private CombatID combatID;
+
 	private EnemyID enemyID;
 	private Enemy[] enemies;
 
@@ -26,8 +28,9 @@ public class Settings : MonoBehaviour
 	{
 		moveID = MovementID.walk;
 		enemyID = EnemyID.simpleFollower;
+		combatID = CombatID.dash;
 
-		rs = new RoundSettings(moveID, enemyID);
+		rs = new RoundSettings(moveID, enemyID, combatID);
 		
 		player = new Player();
 		player.Awake();
@@ -41,7 +44,7 @@ public class Settings : MonoBehaviour
 		canvasGR = canvasBody.AddComponent<GraphicRaycaster>();
 
 
-		combat = new Dash(this, player, canvasBody);
+		combat = rs.SetupCombat(this, player, canvasBody);
 
 		enemies = new Enemy[2];
 		for(int i = 0; i < enemies.Length; i++){

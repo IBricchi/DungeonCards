@@ -9,3 +9,9 @@ public enum EnemyID{
 	simpleFollower,
 	simpleShooter
 }
+
+public enum CombatID{
+	none,
+	dash,
+	shoot
+}
