@@ -35,7 +35,14 @@ public class Settings : MonoBehaviour
 
 		combat.Awake();
 	}
-
+	private void OnEnable()
+	{
+		combat.OnEnable();
+	}
+	private void OnDisable()
+	{
+		combat.OnDisable();
+	}
 	private void Start()
 	{
 		enemies[0].SetPosition(10, 5);

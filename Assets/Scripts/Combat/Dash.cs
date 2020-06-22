@@ -13,6 +13,8 @@ public class Dash
 	private Vector2 pointerPos;
 	private float pointerDist;
 
+	private InputMaster controls;
+
 	public void Awake()
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -31,10 +33,36 @@ public class Dash
 
 		pointerPos = Vector3.up;
 		pointerDist = 1.3f;
+
+		controls = new InputMaster();
+	}
+
+	public void OnEnable()
+	{
+		controls.Enable();
+		controls.Player.MousePoint.performed += ctx => GetMousePoint(ctx.ReadValue<Vector2>());
+		controls.Player.RJoyPoint.performed += ctx => GetRJoyPoint(ctx.ReadValue<Vector2>());
+	}
+
+	public void OnDisable()
+	{
+
 	}
 
 	public void FixedUpdate()
 	{
 		pointer.transform.localPosition = pointerPos * pointerDist;
+		pointer.transform.up = pointerPos;
+	}
+
+	private void GetMousePoint(Vector2 pos)
+	{
+		pos.x -= Screen.width / 2;
+		pos.y -= Screen.height / 2;
+		pointerPos = pos / pos.magnitude;
+	}
+	private void GetRJoyPoint(Vector2 pos)
+	{
+		pointerPos = pos / pos.magnitude;
 	}
 }
