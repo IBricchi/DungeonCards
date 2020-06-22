@@ -2,15 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Dash
+public class Dash : Combat
 {
-	private Settings settings;
-
-	private Player player;
-	private Rigidbody2D playerRB;
-
-	private GameObject canvasBody;
-
 	private GameObject dashbar;
 	private Sprite dashbarSprite;
 	private Image dashbarImg;
@@ -30,8 +23,6 @@ public class Dash
 	private Vector2 pointerPos;
 	private float pointerDist;
 
-	private InputMaster controls;
-
 	// dash variables
 	private float dashSpeed;
 	private float dashTime;
@@ -40,14 +31,10 @@ public class Dash
 	private float dashDischarge;
 	private bool dashing;
 
-	public Dash(Settings _settings, Player _player, GameObject _canvasBody)
-	{
-		settings = _settings;
-		player = _player;
-		canvasBody = _canvasBody;
-	}
+	public Dash(Settings _settings, Player _player, GameObject _canvas) :
+		base(_settings, _player, _canvas) { }
 
-	public void Awake()
+	public override void Awake()
 	{
 		playerRB = player.rb;
 
@@ -90,7 +77,7 @@ public class Dash
 		pointerPos = Vector3.up;
 		pointerDist = 1.3f;
 
-		controls = new InputMaster();
+		c = new InputMaster();
 
 		dashSpeed = 100f;
 		dashTime = 1f;
@@ -100,21 +87,21 @@ public class Dash
 		dashing = false;
 	}
 
-	public void OnEnable()
+	public override void OnEnable()
 	{
-		controls.Enable();
-		controls.Player.MousePoint.performed += ctx => GetMousePoint(ctx.ReadValue<Vector2>());
-		controls.Player.RJoyPoint.performed += ctx => GetRJoyPoint(ctx.ReadValue<Vector2>());
-		controls.Player.Attack.started += ctx => StartAttack();
-		controls.Player.Attack.canceled += ctx => StopAttack();
+		c.Enable();
+		c.Player.MousePoint.performed += ctx => GetMousePoint(ctx.ReadValue<Vector2>());
+		c.Player.RJoyPoint.performed += ctx => GetRJoyPoint(ctx.ReadValue<Vector2>());
+		c.Player.Attack.started += ctx => StartAttack();
+		c.Player.Attack.canceled += ctx => StopAttack();
 	}
 
-	public void OnDisable()
+	public override void OnDisable()
 	{
-		controls.Disable();
+		c.Disable();
 	}
 
-	public void FixedUpdate()
+	public override void FixedUpdate()
 	{
 		pointer.transform.localPosition = pointerPos * pointerDist;
 		pointer.transform.up = pointerPos;

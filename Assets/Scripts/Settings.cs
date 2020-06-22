@@ -18,7 +18,7 @@ public class Settings : MonoBehaviour
 	private EnemyID enemyID;
 	private Enemy[] enemies;
 
-	private Dash combat;
+	private Combat combat;
 
 	private RoundSettings rs;
 
