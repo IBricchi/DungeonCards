@@ -56,7 +56,6 @@ public class Dash
 		dashbarImg.sprite = dashbarSprite;
 		dashbarImg.color = Color.gray;
 		dashbarImg.useSpriteMesh = true;
-		dashbarCR = dashbar.AddComponent<CanvasRenderer>();
 		dashbarRT = dashbar.GetComponent<RectTransform>();
 		dashbarRT.localPosition = new Vector3(-Screen.width/2 + 105,0,0);
 		dashbarRT.sizeDelta = new Vector2(90, 600);
@@ -69,7 +68,6 @@ public class Dash
 		dashlevelImg.sprite = dashlevelSprite;
 		dashlevelImg.color = Color.yellow;
 		dashlevelImg.useSpriteMesh = true;
-		dashlevelCR = dashlevel.AddComponent<CanvasRenderer>();
 		dashlevelRT = dashlevel.GetComponent<RectTransform>();
 		dashlevelRT.localPosition = new Vector3(0, -285, 0);
 		dashlevelRT.sizeDelta = new Vector2(60, 0);
@@ -158,6 +156,7 @@ public class Dash
 	{
 		if (remainingDash == dashTime)
 		{
+			Physics2D.IgnoreLayerCollision(8, 9, true);
 			player.DisableMovement();
 			dashlevelImg.color = Color.yellow;
 			dashing = true;
@@ -166,6 +165,7 @@ public class Dash
 
 	private void StopAttack()
 	{
+		Physics2D.IgnoreLayerCollision(8, 9, false);
 		player.EnableMovement();
 		dashing = false;
 	}

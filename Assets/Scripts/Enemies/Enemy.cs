@@ -37,6 +37,7 @@ public abstract class Enemy
 		for(int i = 0; i < bodies.Length; i++)
 		{
 			bodies[i] = new GameObject();
+			bodies[i].layer = 9;
 		}
 	}
 

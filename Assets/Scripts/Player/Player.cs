@@ -40,6 +40,7 @@ public class Player
 		body = new GameObject();
 		body.tag = "Player";
 		body.name = "Player";
+		body.layer = 8;
 
 		c = new InputMaster();
 
