@@ -15,22 +15,20 @@ public class Settings : MonoBehaviour
 	private Dash combat;
 
 	private RoundSettings rs;
-	public MovementInfo GetMovementSettings()
-	{
-		return rs.moveInfo;
-	}
+
 	private void Awake()
 	{
-		player = new Player();
-		player.Awake();
-
 		moveID = MovementID.walk;
 
 		enemyID = EnemyID.simpleFollower;
 
-		combat = new Dash();
-
 		rs = new RoundSettings(moveID, enemyID);
+		
+		player = new Player();
+		player.Awake();
+		player.UpdateMovementSettings(rs.moveInfo);
+
+		combat = new Dash();
 
 		enemies = new Enemy[2];
 		for(int i = 0; i < enemies.Length; i++){
@@ -42,10 +40,12 @@ public class Settings : MonoBehaviour
 	}
 	private void OnEnable()
 	{
+		player.OnEnable();
 		combat.OnEnable();
 	}
 	private void OnDisable()
 	{
+		player.OnDisable();
 		combat.OnDisable();
 	}
 	private void Start()
@@ -56,11 +56,11 @@ public class Settings : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		player.FixedUpdate();
+		combat.FixedUpdate();
 		foreach (Enemy enemy in enemies)
 		{
 			enemy.FixedUpdate();
 		}
-
-		combat.FixedUpdate();
 	}
 }
