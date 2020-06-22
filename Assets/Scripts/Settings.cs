@@ -28,7 +28,7 @@ public class Settings : MonoBehaviour
 		player.Awake();
 		player.UpdateMovementSettings(rs.moveInfo);
 
-		combat = new Dash();
+		combat = new Dash(player);
 
 		enemies = new Enemy[2];
 		for(int i = 0; i < enemies.Length; i++){

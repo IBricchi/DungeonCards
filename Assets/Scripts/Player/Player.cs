@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player
 {
-	private GameObject body;
+	public GameObject body;
 
 	private GameObject camBody;
 	private Camera cam;
@@ -11,7 +11,7 @@ public class Player
 	private Sprite idleSprite;
 	private SpriteRenderer sr;
 
-	private Rigidbody2D rb;
+	public Rigidbody2D rb;
 	private PolygonCollider2D pc;
 
 	private InputMaster c;
@@ -32,6 +32,9 @@ public class Player
 	private Vector2 vel;
 	private float speed;
 
+	// overrides
+	private bool disableMovment = false;
+
 	public void Awake()
 	{
 		body = new GameObject();
@@ -40,11 +43,11 @@ public class Player
 		c = new InputMaster();
 
 		camBody = new GameObject();
-		cam = camBody.AddComponent<Camera>();
 		camBody.transform.parent = body.transform;
 		camBody.transform.localPosition = new Vector3(0, 0, -30);
 		camBody.tag = "MainCamera";
 
+		cam = camBody.AddComponent<Camera>();
 		cam.orthographic = true;
 
 		idleSprite = Resources.Load<Sprite>("Art/Player/idle");
@@ -92,8 +95,11 @@ public class Player
 		}
 
 		// update velocity
-		vel = lastDir * speed;
-		rb.velocity = vel;
+		if (!disableMovment)
+		{
+			vel = lastDir * speed;
+			rb.velocity = vel;
+		}
 	}
 
 	public void UpdateMovementSettings(MovementInfo _moveSettings)
@@ -117,5 +123,14 @@ public class Player
 	{
 		moving = false;
 		dir = _dir;
+	}
+
+	public void DisableMovement()
+	{
+		disableMovment = true;
+	}
+	public void EnableMovement()
+	{
+		disableMovment = false;
 	}
 }

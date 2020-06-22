@@ -24,14 +24,11 @@ public struct MovementSettings
 		switch(id){
 			case MovementID.walk:
 				return walk;
-				break;
 			case MovementID.fast:
 				return fast;
-				break;
 			default:
 				Debug.LogWarning("Non supported MovmentID asked for movement type, default returned");
 				return walk;
-				break;
 		}
 	}
 }
