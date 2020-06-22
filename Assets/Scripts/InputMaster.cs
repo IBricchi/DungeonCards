@@ -41,6 +41,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""4a6c8b22-17f6-4ac2-a6d6-c9e4761f1649"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -263,6 +271,28 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""R-JoyPoint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2045343-6a5d-4aed-ad4c-323e3d494dc2"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""615df63d-84ed-49c4-bc4f-3e24d38c01ea"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -302,6 +332,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_MousePoint = m_Player.FindAction("MousePoint", throwIfNotFound: true);
         m_Player_RJoyPoint = m_Player.FindAction("R-JoyPoint", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -354,6 +385,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_MousePoint;
     private readonly InputAction m_Player_RJoyPoint;
+    private readonly InputAction m_Player_Attack;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -361,6 +393,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @MousePoint => m_Wrapper.m_Player_MousePoint;
         public InputAction @RJoyPoint => m_Wrapper.m_Player_RJoyPoint;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -379,6 +412,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @RJoyPoint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRJoyPoint;
                 @RJoyPoint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRJoyPoint;
                 @RJoyPoint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRJoyPoint;
+                @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -392,6 +428,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @RJoyPoint.started += instance.OnRJoyPoint;
                 @RJoyPoint.performed += instance.OnRJoyPoint;
                 @RJoyPoint.canceled += instance.OnRJoyPoint;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
         }
     }
@@ -419,5 +458,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnMousePoint(InputAction.CallbackContext context);
         void OnRJoyPoint(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

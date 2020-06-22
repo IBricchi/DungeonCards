@@ -4,7 +4,7 @@ using System.Collections;
 public class Dash
 {
 	private GameObject player;
-	private Rigidbody2D rb;
+	private Rigidbody2D playerRB;
 
 	private GameObject pointer;
 	private Sprite pointerSprite;
@@ -15,10 +15,12 @@ public class Dash
 
 	private InputMaster controls;
 
+	private float dashSpeed;
+
 	public void Awake()
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
-		rb = player.GetComponent<Rigidbody2D>();
+		playerRB = player.GetComponent<Rigidbody2D>();
 
 		pointer = new GameObject();
 		pointer.transform.parent = player.transform;
@@ -35,6 +37,8 @@ public class Dash
 		pointerDist = 1.3f;
 
 		controls = new InputMaster();
+
+		dashSpeed = 100f;
 	}
 
 	public void OnEnable()
@@ -42,11 +46,12 @@ public class Dash
 		controls.Enable();
 		controls.Player.MousePoint.performed += ctx => GetMousePoint(ctx.ReadValue<Vector2>());
 		controls.Player.RJoyPoint.performed += ctx => GetRJoyPoint(ctx.ReadValue<Vector2>());
+		controls.Player.Attack.performed += ctx => Attack();
 	}
 
 	public void OnDisable()
 	{
-
+		controls.Disable();
 	}
 
 	public void FixedUpdate()
@@ -64,5 +69,10 @@ public class Dash
 	private void GetRJoyPoint(Vector2 pos)
 	{
 		pointerPos = pos / pos.magnitude;
+	}
+
+	private void Attack()
+	{
+		playerRB.velocity = pointerPos * dashSpeed;
 	}
 }

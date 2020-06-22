@@ -28,7 +28,6 @@ public class PlayerControl : MonoBehaviour
 	private Vector2 vel;
 	private float speed;
 
-
 	private void Awake()
 	{
 		c = new InputMaster();
@@ -66,8 +65,8 @@ public class PlayerControl : MonoBehaviour
 		stopThreshold = moveSettings.stopThreshold;
 	}
 	private void FixedUpdate()
-	{
-			// change speed depending on movement type
+	{	
+		// change speed depending on movement type
 		if (moving)
 		{
 			speed += (maxSpeed - speed) * acceleration * Time.fixedDeltaTime;
