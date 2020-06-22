@@ -39,10 +39,12 @@ public class Player
 	{
 		body = new GameObject();
 		body.tag = "Player";
+		body.name = "Player";
 
 		c = new InputMaster();
 
 		camBody = new GameObject();
+		camBody.name = "Main Camera";
 		camBody.transform.parent = body.transform;
 		camBody.transform.localPosition = new Vector3(0, 0, -30);
 		camBody.tag = "MainCamera";
@@ -58,6 +60,7 @@ public class Player
 		rb = body.AddComponent<Rigidbody2D>();
 		rb.freezeRotation = true;
 		rb.gravityScale = 0;
+		rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 		pc = body.AddComponent<PolygonCollider2D>();
 
 		// speed claculation variables

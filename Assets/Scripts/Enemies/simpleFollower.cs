@@ -31,6 +31,7 @@ public class SimpleFollower : Enemy
 
 		// basic information
 		body = bodies[0];
+		body.name = "Simple Follower";
 		speed = 100f;
 		moveDir = Vector2.zero;
 		vel = Vector2.zero;

@@ -34,6 +34,7 @@ public class Dash
 		playerRB = player.rb;
 
 		pointer = new GameObject();
+		pointer.name = "Dash Pointer";
 		pointer.transform.parent = player.body.transform;
 		
 		pointerSprite = Resources.Load<Sprite>("Art/Combat/pointer");

@@ -7,6 +7,9 @@ public class Settings : MonoBehaviour
 {
 	private Player player;
 
+	private GameObject canvasBody;
+	private Canvas canvas;
+
 	private MovementID moveID;
 	
 	private EnemyID enemyID;
@@ -27,6 +30,10 @@ public class Settings : MonoBehaviour
 		player = new Player();
 		player.Awake();
 		player.UpdateMovementSettings(rs.moveInfo);
+
+		canvasBody = new GameObject();
+		canvasBody.name = "Canvas";
+		canvas = canvasBody.AddComponent<Canvas>();
 
 		combat = new Dash(player);
 
