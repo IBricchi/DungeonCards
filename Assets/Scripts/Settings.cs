@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
+	private Player player;
+
 	private MovementID moveID;
 	
 	private EnemyID enemyID;
@@ -19,6 +21,9 @@ public class Settings : MonoBehaviour
 	}
 	private void Awake()
 	{
+		player = new Player();
+		player.Awake();
+
 		moveID = MovementID.walk;
 
 		enemyID = EnemyID.simpleFollower;
