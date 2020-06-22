@@ -7,6 +7,20 @@ public class Dash
 	private Player player;
 	private Rigidbody2D playerRB;
 
+	private GameObject canvasBody;
+
+	private GameObject dashbar;
+	private Sprite dashbarSprite;
+	private Image dashbarImg;
+	private CanvasRenderer dashbarCR;
+	private RectTransform dashbarRT;
+
+	private GameObject dashlevel;
+	private Sprite dashlevelSprite;
+	private Image dashlevelImg;
+	private CanvasRenderer dashlevelCR;
+	private RectTransform dashlevelRT;
+
 	private GameObject pointer;
 	private Sprite pointerSprite;
 	private SpriteRenderer pointerSR;
@@ -24,14 +38,41 @@ public class Dash
 	private float dashDischarge;
 	private bool dashing;
 
-	public Dash(Player _player)
+	public Dash(Player _player, GameObject _canvasBody)
 	{
 		player = _player;
+		canvasBody = _canvasBody;
 	}
 
 	public void Awake()
 	{
 		playerRB = player.rb;
+
+		dashbar = new GameObject();
+		dashbar.name = "Dash Bar";
+		dashbar.transform.SetParent(canvasBody.transform);
+		dashbarSprite = Resources.Load<Sprite>("Art/Combat/Dash/dashbar");
+		dashbarImg = dashbar.AddComponent<Image>();
+		dashbarImg.sprite = dashbarSprite;
+		dashbarImg.color = Color.gray;
+		dashbarImg.useSpriteMesh = true;
+		dashbarCR = dashbar.AddComponent<CanvasRenderer>();
+		dashbarRT = dashbar.GetComponent<RectTransform>();
+		dashbarRT.localPosition = new Vector3(-Screen.width/2 + 105,0,0);
+		dashbarRT.sizeDelta = new Vector2(90, 600);
+
+		dashlevel = new GameObject();
+		dashlevel.name = "Dash Level";
+		dashlevel.transform.SetParent(dashbar.transform);
+		dashlevelSprite = Resources.Load<Sprite>("Art/Combat/Dash/dashlevel");
+		dashlevelImg = dashlevel.AddComponent<Image>();
+		dashlevelImg.sprite = dashlevelSprite;
+		dashlevelImg.color = Color.yellow;
+		dashlevelImg.useSpriteMesh = true;
+		dashlevelCR = dashlevel.AddComponent<CanvasRenderer>();
+		dashlevelRT = dashlevel.GetComponent<RectTransform>();
+		dashlevelRT.localPosition = new Vector3(0, -285, 0);
+		dashlevelRT.sizeDelta = new Vector2(60, 0);
 
 		pointer = new GameObject();
 		pointer.name = "Dash Pointer";
@@ -94,9 +135,12 @@ public class Dash
 			if(remainingDash > dashTime)
 			{
 				remainingDash = dashTime;
+				dashlevelImg.color = Color.green;
 			}
 		}
-		Debug.Log(remainingDash);
+
+		dashlevelRT.localPosition = new Vector3(0, (remainingDash - dashTime) * 285, 0);
+		dashlevelRT.sizeDelta = new Vector2(60, 570 * remainingDash);
 	}
 
 	private void GetMousePoint(Vector2 pos)
@@ -115,6 +159,7 @@ public class Dash
 		if (remainingDash == dashTime)
 		{
 			player.DisableMovement();
+			dashlevelImg.color = Color.yellow;
 			dashing = true;
 		}
 	}

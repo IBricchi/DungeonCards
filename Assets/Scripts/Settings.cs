@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Settings : MonoBehaviour
 
 	private GameObject canvasBody;
 	private Canvas canvas;
+	private CanvasScaler canvasScaler;
+	private GraphicRaycaster canvasGR;
 
 	private MovementID moveID;
 	
@@ -22,7 +25,6 @@ public class Settings : MonoBehaviour
 	private void Awake()
 	{
 		moveID = MovementID.walk;
-
 		enemyID = EnemyID.simpleFollower;
 
 		rs = new RoundSettings(moveID, enemyID);
@@ -34,8 +36,12 @@ public class Settings : MonoBehaviour
 		canvasBody = new GameObject();
 		canvasBody.name = "Canvas";
 		canvas = canvasBody.AddComponent<Canvas>();
+		canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+		canvasScaler = canvasBody.AddComponent<CanvasScaler>();
+		canvasGR = canvasBody.AddComponent<GraphicRaycaster>();
 
-		combat = new Dash(player);
+
+		combat = new Dash(player, canvasBody);
 
 		enemies = new Enemy[2];
 		for(int i = 0; i < enemies.Length; i++){
