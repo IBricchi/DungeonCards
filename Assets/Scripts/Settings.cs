@@ -6,23 +6,24 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
+	private MovementID moveID;
+	private CombatID combatID;
+	private EnemyID enemyID;
+	
+	private RoundSettings rs;
+
 	private Player player;
+
+	private Maze terrain;
 
 	private GameObject canvasBody;
 	private Canvas canvas;
 	private CanvasScaler canvasScaler;
 	private GraphicRaycaster canvasGR;
 
-	private MovementID moveID;
-
-	private CombatID combatID;
-
-	private EnemyID enemyID;
 	private Enemy[] enemies;
 
 	private Combat combat;
-
-	private RoundSettings rs;
 
 	private void Awake()
 	{
@@ -36,13 +37,15 @@ public class Settings : MonoBehaviour
 		player.Awake();
 		player.UpdateMovementSettings(rs.moveInfo);
 
+		terrain = new Maze(this, player);
+		terrain.Awake();
+
 		canvasBody = new GameObject();
 		canvasBody.name = "Canvas";
 		canvas = canvasBody.AddComponent<Canvas>();
 		canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 		canvasScaler = canvasBody.AddComponent<CanvasScaler>();
 		canvasGR = canvasBody.AddComponent<GraphicRaycaster>();
-
 
 		combat = rs.SetupCombat(this, player, canvasBody);
 
