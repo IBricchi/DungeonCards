@@ -74,7 +74,7 @@ public class Maze
 		wall.transform.localPosition = new Vector3(corridorWidth * posx, corridorWidth * posy, 0);
 		SpriteRenderer sr = wall.AddComponent<SpriteRenderer>();
 		sr.sprite = wallSprite;
-		sr.color = new Color(166, 123, 87);
+		sr.color =	new Color(0.6509434f, 0.4831124f, 0.3408241f);
 		wall.AddComponent<BoxCollider2D>();
 		return wall;
 	}
