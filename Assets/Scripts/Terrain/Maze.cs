@@ -30,11 +30,11 @@ public class Maze
 
 	public void Awake()
 	{
-		sizex = 20;
+		sizex = 30;
 		sizey = 20;
 
-		corridorWidth = 5;
-		wallWidth = 1;
+		corridorWidth = 7;
+		wallWidth = 2;
 		ww2 = wallWidth / 2;
 
 		mazeBody = new GameObject();
@@ -50,31 +50,38 @@ public class Maze
 		{
 			for (int x = 0; x < sizex; x++)
 			{
-				if(maze[x,y].HasFlag(CellState.Top))
+				if (maze[x, y].HasFlag(CellState.Top))
 				{
 					lastWall = new GameObject();
-					lastWall = SetupWall(lastWall, corridorWidth+wallWidth, wallWidth, x+ww2, y);
+					lastWall = SetupWall(lastWall, corridorWidth + wallWidth, wallWidth, corridorWidth * x, corridorWidth * y - corridorWidth / wallWidth);
 					walls.Add(lastWall);
 				}
-				if(maze[x,y].HasFlag(CellState.Left))
+				if (maze[x, y].HasFlag(CellState.Left))
 				{
 					lastWall = new GameObject();
-					lastWall = SetupWall(lastWall, wallWidth, corridorWidth+wallWidth, x, y+ww2);
+					lastWall = SetupWall(lastWall, wallWidth, corridorWidth + wallWidth, corridorWidth * x - corridorWidth / wallWidth, corridorWidth * y);
 					walls.Add(lastWall);
 				}
-				
 			}
 		}
+
+		lastWall = new GameObject();
+		lastWall = SetupWall(lastWall, corridorWidth * sizex + wallWidth, wallWidth, corridorWidth* (sizex) / 2 - corridorWidth/wallWidth, corridorWidth*sizey - corridorWidth/wallWidth);
+		walls.Add(lastWall);
+
+		lastWall = new GameObject();
+		lastWall = SetupWall(lastWall, wallWidth, corridorWidth * sizey + wallWidth, corridorWidth * sizex - corridorWidth / wallWidth, corridorWidth*(sizey)/2 - corridorWidth/wallWidth);
+		walls.Add(lastWall);
 	}
 
 	private GameObject SetupWall(GameObject wall, float width, float height, float posx, float posy)
 	{
 		wall.transform.SetParent(mazeBody.transform);
 		wall.transform.localScale = new Vector3(width, height, 0);
-		wall.transform.localPosition = new Vector3(corridorWidth * posx, corridorWidth * posy, 0);
+		wall.transform.localPosition = new Vector3(posx, posy, 0);
 		SpriteRenderer sr = wall.AddComponent<SpriteRenderer>();
 		sr.sprite = wallSprite;
-		sr.color =	new Color(0.6509434f, 0.4831124f, 0.3408241f);
+		sr.color =	new Color(0.6509434f, 0.4831124f, 0.3408241f); // light brown
 		wall.AddComponent<BoxCollider2D>();
 		return wall;
 	}
