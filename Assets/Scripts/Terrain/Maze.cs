@@ -2,36 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Maze
+public class Maze : Terrain
 {
-	private Settings settings;
-	private Player player;
-
 	private GameObject mazeBody;
 	private List<GameObject> walls;
 	private Sprite wallSprite;
 
-	private int enemyCount;
-
 	private float corridorWidth;
 	private float wallWidth;
-	private float ww2;
 
 	private int sizex;
 	private int sizey;
 
-	public MazeGen maze;
+	private MazeGen maze;
 
 	public Maze(Settings _settings, Player _player)
-	{
-		settings = _settings;
-		player = _player;
-	}
+		: base(_settings, _player) { }
 
-	public void Awake()
+	public override void Awake()
 	{
 		sizex = 10;
-		sizey = 30;
+		sizey = 10;
 
 		corridorWidth = 7;
 		wallWidth = 3;
@@ -87,12 +78,12 @@ public class Maze
 		return wall;
 	}
 
-	public int GetEnemyCount()
+	public override int GetEnemyCount()
 	{
 		return enemyCount;
 	}
 
-	public void PositionEnemies(Enemy[] enemies)
+	public override void PositionEnemies(Enemy[] enemies)
 	{
 		foreach(Enemy enemy in enemies)
 		{

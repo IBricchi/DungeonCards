@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
+//https://rosettacode.org/wiki/Maze_generation#C.23
 public static class Extensions
 {
 	public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, System.Random rng)

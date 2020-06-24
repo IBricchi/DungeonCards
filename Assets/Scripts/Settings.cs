@@ -14,7 +14,7 @@ public class Settings : MonoBehaviour
 
 	private Player player;
 
-	private Maze terrain;
+	private Terrain terrain;
 
 	private GameObject canvasBody;
 	private Canvas canvas;
@@ -27,19 +27,24 @@ public class Settings : MonoBehaviour
 
 	private void Awake()
 	{
+		// Get ID's for each component
 		moveID = MovementID.walk;
 		enemyID = EnemyID.simpleFollower;
 		combatID = CombatID.dash;
 
+		// setup round settings based on ID's
 		rs = new RoundSettings(moveID, enemyID, combatID);
 		
+		// Setup Player
 		player = new Player();
 		player.Awake();
 		player.UpdateMovementSettings(rs.moveInfo);
 
+		// setup terrain
 		terrain = new Maze(this, player);
 		terrain.Awake();
 
+		// setup overall canvas
 		canvasBody = new GameObject();
 		canvasBody.name = "Canvas";
 		canvas = canvasBody.AddComponent<Canvas>();
@@ -47,17 +52,17 @@ public class Settings : MonoBehaviour
 		canvasScaler = canvasBody.AddComponent<CanvasScaler>();
 		canvasGR = canvasBody.AddComponent<GraphicRaycaster>();
 
+		// setup combat
 		combat = rs.SetupCombat(this, player, canvasBody);
+		combat.Awake();
 
+		// setup enemies
 		enemies = new Enemy[terrain.GetEnemyCount()];
 		for(int i = 0; i < enemies.Length; i++){
 			enemies[i] = rs.CreateEnemy();
 			enemies[i].Awake();
 		}
-
 		terrain.PositionEnemies(enemies);
-
-		combat.Awake();
 	}
 	private void OnEnable()
 	{
