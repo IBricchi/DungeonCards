@@ -9,6 +9,7 @@ public class Settings : MonoBehaviour
 	private MovementID moveID;
 	private CombatID combatID;
 	private EnemyID enemyID;
+	private TerrainID terrainID;
 	
 	private RoundSettings rs;
 
@@ -31,9 +32,10 @@ public class Settings : MonoBehaviour
 		moveID = MovementID.walk;
 		enemyID = EnemyID.simpleFollower;
 		combatID = CombatID.dash;
+		terrainID = TerrainID.maze;
 
 		// setup round settings based on ID's
-		rs = new RoundSettings(moveID, enemyID, combatID);
+		rs = new RoundSettings(moveID, enemyID, combatID, terrainID);
 		
 		// Setup Player
 		player = new Player();
@@ -41,7 +43,7 @@ public class Settings : MonoBehaviour
 		player.UpdateMovementSettings(rs.moveInfo);
 
 		// setup terrain
-		terrain = new Maze(this, player);
+		terrain = rs.SetupTerrain(this, player);
 		terrain.Awake();
 
 		// setup overall canvas

@@ -15,3 +15,8 @@ public enum CombatID{
 	dash,
 	shoot
 }
+
+public enum TerrainID{
+	open,
+	maze
+}
