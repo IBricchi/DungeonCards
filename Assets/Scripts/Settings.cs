@@ -49,11 +49,13 @@ public class Settings : MonoBehaviour
 
 		combat = rs.SetupCombat(this, player, canvasBody);
 
-		enemies = new Enemy[2];
+		enemies = new Enemy[terrain.GetEnemyCount()];
 		for(int i = 0; i < enemies.Length; i++){
 			enemies[i] = rs.CreateEnemy();
 			enemies[i].Awake();
 		}
+
+		terrain.PositionEnemies(enemies);
 
 		combat.Awake();
 	}
@@ -66,11 +68,6 @@ public class Settings : MonoBehaviour
 	{
 		player.OnDisable();
 		combat.OnDisable();
-	}
-	private void Start()
-	{
-		enemies[0].SetPosition(10, 5);
-		enemies[1].SetPosition(10, 0);
 	}
 
 	private void FixedUpdate()

@@ -30,12 +30,11 @@ public class Maze
 
 	public void Awake()
 	{
-		sizex = 30;
-		sizey = 20;
+		sizex = 10;
+		sizey = 30;
 
 		corridorWidth = 7;
-		wallWidth = 2;
-		ww2 = wallWidth / 2;
+		wallWidth = 3;
 
 		mazeBody = new GameObject();
 		mazeBody.name = "Maze";
@@ -53,25 +52,27 @@ public class Maze
 				if (maze[x, y].HasFlag(CellState.Top))
 				{
 					lastWall = new GameObject();
-					lastWall = SetupWall(lastWall, corridorWidth + wallWidth, wallWidth, corridorWidth * x, corridorWidth * y - corridorWidth / wallWidth);
+					lastWall = SetupWall(lastWall, corridorWidth + wallWidth, wallWidth, corridorWidth * x, corridorWidth * y - corridorWidth / 2);
 					walls.Add(lastWall);
 				}
 				if (maze[x, y].HasFlag(CellState.Left))
 				{
 					lastWall = new GameObject();
-					lastWall = SetupWall(lastWall, wallWidth, corridorWidth + wallWidth, corridorWidth * x - corridorWidth / wallWidth, corridorWidth * y);
+					lastWall = SetupWall(lastWall, wallWidth, corridorWidth + wallWidth, corridorWidth * x - corridorWidth / 2, corridorWidth * y);
 					walls.Add(lastWall);
 				}
 			}
 		}
 
 		lastWall = new GameObject();
-		lastWall = SetupWall(lastWall, corridorWidth * sizex + wallWidth, wallWidth, corridorWidth* (sizex) / 2 - corridorWidth/wallWidth, corridorWidth*sizey - corridorWidth/wallWidth);
+		lastWall = SetupWall(lastWall, corridorWidth * sizex + wallWidth, wallWidth, corridorWidth * sizex / 2 - corridorWidth / 2, corridorWidth * sizey - corridorWidth / 2);
 		walls.Add(lastWall);
 
 		lastWall = new GameObject();
-		lastWall = SetupWall(lastWall, wallWidth, corridorWidth * sizey + wallWidth, corridorWidth * sizex - corridorWidth / wallWidth, corridorWidth*(sizey)/2 - corridorWidth/wallWidth);
+		lastWall = SetupWall(lastWall, wallWidth, corridorWidth * sizey + wallWidth, corridorWidth * sizex - corridorWidth / 2, corridorWidth * sizey / 2 - corridorWidth / 2);
 		walls.Add(lastWall);
+
+		enemyCount = 0;
 	}
 
 	private GameObject SetupWall(GameObject wall, float width, float height, float posx, float posy)
@@ -84,5 +85,21 @@ public class Maze
 		sr.color =	new Color(0.6509434f, 0.4831124f, 0.3408241f); // light brown
 		wall.AddComponent<BoxCollider2D>();
 		return wall;
+	}
+
+	public int GetEnemyCount()
+	{
+		return enemyCount;
+	}
+
+	public void PositionEnemies(Enemy[] enemies)
+	{
+		foreach(Enemy enemy in enemies)
+		{
+			enemy.SetPosition(
+				Random.Range(wallWidth, sizex * corridorWidth - wallWidth),
+				Random.Range(wallWidth, sizey * corridorWidth - wallWidth)
+			);
+		}
 	}
 }
