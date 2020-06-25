@@ -21,7 +21,7 @@ public class Maze : Terrain
 
 	public override void Awake()
 	{
-		enemyCount = 1;
+		enemyCount = 10;
 
 		sizex = 10;
 		sizey = 10;

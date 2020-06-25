@@ -60,7 +60,7 @@ public class MazeGen
 		for (var x = 0; x < width; x++)
 			for (var y = 0; y < height; y++)
 				_cells[x, y] = CellState.Initial;
-		_rng = new System.Random(0);
+		_rng = new System.Random();
 		VisitCell(_rng.Next(width), _rng.Next(height));
 	}
 
