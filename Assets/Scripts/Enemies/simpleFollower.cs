@@ -6,61 +6,45 @@ using UnityEngine;
 
 public class SimpleFollower : Enemy
 {
-	// basic information
-	private int size;
-
-	private GameObject playerGO;
-
-	private GameObject body;
+	// basic variables
 	public float speed;
 	private Vector2 moveDir;
 	private Vector2 pos;
 	private Vector2 vel;
 
-	// visusals
-	private Sprite idleSprite;
-
-	// physics simulations
-	private Rigidbody2D rb;
-
 	// player information
+	private GameObject playerGO;
 	private Vector2 target;
 
 	public SimpleFollower(Settings settings, Player player):
 		base(settings, player) { }
 
-	public override void Awake()
+	protected override void ChildAwake()
 	{
 		// setup basic enemy information
 		ID = EnemyID.simpleFollower;
-		size = 1;
-		Setup(size);
 
 		// player reference
 		playerGO = player.body;
 
 		// basic information
-		body = bodies[0];
-		body.name = "Simple Follower";
 		speed = 100f;
 		moveDir = Vector2.zero;
 		vel = Vector2.zero;
 
-		// physics
-		rb = rbs[0];
+		// visuals information
+		idleSprite = Resources.Load<Sprite>("Art/Enemies/SimpleFollower/idle");
 
 		// game information
 		health = 12f;
 	}
 
-	protected override void SetupSprites()
+	protected override void ChildSetupBody()
 	{
-		idleSprite = Resources.Load<Sprite>("Art/Enemies/simpleFollower/idle");
-		srs[0] = bodies[0].AddComponent<SpriteRenderer>();
-		srs[0].sprite = idleSprite;
+		body.name = "Simple Follower";
 	}
 
-	public override void FixedUpdate()
+	protected override void ChildFixedUpdate()
 	{
 		// check if dead
 		if(health <= 0)

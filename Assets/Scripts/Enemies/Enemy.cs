@@ -5,22 +5,25 @@ using UnityEngine;
 
 public abstract class Enemy
 {
+	// ID of generated enemy, not unique for each instance but unique for each type of enemy
 	public EnemyID ID;
 
-	protected Player player;
+	// basic references to player and settings
 	protected Settings settings;
+	protected Player player;
+	
+	// basic enemy components
+	protected GameObject body;
+	protected EnemyInfo enemyInfo;
 
-	protected GameObject[] bodies;
-	protected EnemyInfo[] eis;
-	protected Rigidbody2D[] rbs;
-	protected PolygonCollider2D[] pcs;
-	protected SpriteRenderer[] srs;
+	// basic components used for 1 body components
+	protected Sprite idleSprite;
+	protected SpriteRenderer sr;
+	protected Rigidbody2D rb;
+	protected Collider2D col;
 
 	protected float health;
 	public bool alive;
-
-
-	public abstract void Awake();
 
 	public Enemy(Settings _settings, Player _player)
 	{
@@ -28,84 +31,83 @@ public abstract class Enemy
 		player = _player;
 	}
 
-	public void Setup(int size){
-		SetupSize(size);
-		SetupBodies();
+	// awake function
+	public void Awake()
+	{
+		// sets up variables for the child
+		ChildAwake();
+
+		// sets up enemy components
+		Setup();
+	}
+	protected abstract void ChildAwake();
+
+	// setup basic enemy settings
+	public void Setup(){
+		alive = true;
+		SetupBody();
 		SetupSprites();
 		SetupPhysics();
-		SetupHealth();
 	}
 
-	protected void SetupSize(int size)
+	// basic body setup with possible child extension
+	protected void SetupBody(){
+		body = new GameObject();
+		body.layer = 9;
+		body.tag = "Enemy";
+		enemyInfo = body.AddComponent<EnemyInfo>();
+		enemyInfo.enemy = this;
+
+		ChildSetupBody();
+	}
+	protected virtual void ChildSetupBody() { }
+
+	// basic sprite setup for any enemy with only one body, virtual for child to overwrite
+	protected virtual void SetupSprites()
 	{
-		bodies = new GameObject[size];
-		eis = new EnemyInfo[size];
-		rbs = new Rigidbody2D[size];
-		pcs = new PolygonCollider2D[size];
-		srs = new SpriteRenderer[size];
+		SpriteRenderer sr = body.AddComponent<SpriteRenderer>();
+		sr.sprite = idleSprite;
 	}
 
-	protected void SetupBodies(){
-		for(int i = 0; i < bodies.Length; i++)
-		{
-			bodies[i] = new GameObject();
-			bodies[i].layer = 9;
-			bodies[i].tag = "Enemy";
-			eis[i] = bodies[i].AddComponent<EnemyInfo>();
-			eis[i].enemy = this;
-		}
-	}
-
-	protected abstract void SetupSprites();
-
+	// basic physics setup for any enemy with one body, virtual for child to overwrite
 	protected virtual void SetupPhysics()
 	{
-		for(int i = 0; i < bodies.Length; i++)
-		{
-			rbs[i] = bodies[i].AddComponent<Rigidbody2D>();
-			rbs[i].gravityScale = 0;
-			rbs[i].freezeRotation = true;
+		rb = body.AddComponent<Rigidbody2D>();
+		rb.gravityScale = 0;
+		rb.freezeRotation = true;
 
-			pcs[i] = bodies[i].AddComponent<PolygonCollider2D>();
-		}
+		col = body.AddComponent<PolygonCollider2D>();
 	}
 
-	protected virtual void SetupHealth()
+	// fixed update calls child fixed update overloaded by child if needed
+	public void FixedUpdate()
 	{
-		alive = true;
+		ChildFixedUpdate();
 	}
+	protected virtual void ChildFixedUpdate() { }
 
-	public abstract void FixedUpdate();
-
+	// simple position controls for components overloaded to allow for Vector2, and float float inputs
 	public void SetPosition(Vector2 pos){
 		SetPosition(pos.x, pos.y);
 	}
-
-	public virtual void SetPosition(float x, float y)
+	public virtual void SetPosition(float x, float y) // virtual, overload for any enemy with more than one body
 	{
 		Vector3 pos = new Vector3(x, y, 0);
-		foreach (Rigidbody2D rb in rbs)
-		{
-			rb.transform.position = pos;
-		}
+		rb.transform.position = pos;
 	}
 
+	// simple collisions starting and stopping for single body enemies, required for certain combats
+	// requires overload for more than one body enemies
 	public virtual void StopPhysicsCollisions()
 	{
-		foreach(Collider2D pc in pcs)
-		{
-			pc.isTrigger = true;
-		}
+		col.isTrigger = true;
 	}
-
 	public virtual void StartPhysicsCollisions()
 	{
-		foreach (Collider2D pc in pcs)
-		{
-			pc.isTrigger = false;
-		}
+		col.isTrigger = false;
 	}
 
+	// basic damage for enemies, if more complex damange control is required overload
 	public virtual void TakeDamage(float damage)
 	{
 		health -= damage;
