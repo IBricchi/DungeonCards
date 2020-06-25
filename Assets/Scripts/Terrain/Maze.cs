@@ -21,6 +21,8 @@ public class Maze : Terrain
 
 	public override void Awake()
 	{
+		enemyCount = 1;
+
 		sizex = 10;
 		sizey = 10;
 
@@ -62,8 +64,6 @@ public class Maze : Terrain
 		lastWall = new GameObject();
 		lastWall = SetupWall(lastWall, wallWidth, corridorWidth * sizey + wallWidth, corridorWidth * sizex - corridorWidth / 2, corridorWidth * sizey / 2 - corridorWidth / 2);
 		walls.Add(lastWall);
-
-		enemyCount = 0;
 	}
 
 	private GameObject SetupWall(GameObject wall, float width, float height, float posx, float posy)

@@ -5,29 +5,41 @@ using UnityEngine;
 
 public abstract class Enemy
 {
+	public EnemyID ID;
+
+	protected Player player;
+	protected Settings settings;
+
 	protected GameObject[] bodies;
+	protected EnemyInfo[] eis;
 	protected Rigidbody2D[] rbs;
 	protected PolygonCollider2D[] pcs;
 	protected SpriteRenderer[] srs;
 
-	protected GameObject player;
+	protected float health;
+	public bool alive;
+
 
 	public abstract void Awake();
 
-	public void Setup(int size, bool getPlayerRef){
+	public Enemy(Settings _settings, Player _player)
+	{
+		settings = _settings;
+		player = _player;
+	}
+
+	public void Setup(int size){
 		SetupSize(size);
 		SetupBodies();
 		SetupSprites();
 		SetupPhysics();
-		if(getPlayerRef)
-		{
-			player = GameObject.FindGameObjectWithTag("Player");
-		}
+		SetupHealth();
 	}
 
 	protected void SetupSize(int size)
 	{
 		bodies = new GameObject[size];
+		eis = new EnemyInfo[size];
 		rbs = new Rigidbody2D[size];
 		pcs = new PolygonCollider2D[size];
 		srs = new SpriteRenderer[size];
@@ -38,6 +50,9 @@ public abstract class Enemy
 		{
 			bodies[i] = new GameObject();
 			bodies[i].layer = 9;
+			bodies[i].tag = "Enemy";
+			eis[i] = bodies[i].AddComponent<EnemyInfo>();
+			eis[i].enemy = this;
 		}
 	}
 
@@ -53,6 +68,11 @@ public abstract class Enemy
 
 			pcs[i] = bodies[i].AddComponent<PolygonCollider2D>();
 		}
+	}
+
+	protected virtual void SetupHealth()
+	{
+		alive = true;
 	}
 
 	public abstract void FixedUpdate();
@@ -84,5 +104,10 @@ public abstract class Enemy
 		{
 			pc.isTrigger = false;
 		}
+	}
+
+	public virtual void TakeDamage(float damage)
+	{
+		health -= damage;
 	}
 }

@@ -22,7 +22,7 @@ public class Settings : MonoBehaviour
 	private CanvasScaler canvasScaler;
 	private GraphicRaycaster canvasGR;
 
-	private Enemy[] enemies;
+	public List<Enemy> enemies;
 
 	private Combat combat;
 
@@ -59,12 +59,12 @@ public class Settings : MonoBehaviour
 		combat.Awake();
 
 		// setup enemies
-		enemies = new Enemy[terrain.GetEnemyCount()];
-		for(int i = 0; i < enemies.Length; i++){
-			enemies[i] = rs.CreateEnemy();
+		enemies = new List<Enemy>();
+		for(int i = 0; i < terrain.GetEnemyCount(); i++){
+			enemies.Add(rs.CreateEnemy(this, player));
 			enemies[i].Awake();
 		}
-		terrain.PositionEnemies(enemies);
+		terrain.PositionEnemies(enemies.ToArray());
 	}
 	private void OnEnable()
 	{
@@ -81,9 +81,9 @@ public class Settings : MonoBehaviour
 	{
 		player.FixedUpdate();
 		combat.FixedUpdate();
-		foreach (Enemy enemy in enemies)
+		for (int i = enemies.Count - 1; i >= 0; i--)
 		{
-			enemy.FixedUpdate();
+			enemies[i].FixedUpdate();
 		}
 	}
 

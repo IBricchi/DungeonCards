@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class Dash : Combat
 {
+	private Rigidbody2D playerRB;
+	private DashCombat di;
+
 	private GameObject dashbar;
 	private Sprite dashbarSprite;
 	private Image dashbarImg;
@@ -37,6 +40,9 @@ public class Dash : Combat
 	public override void Awake()
 	{
 		playerRB = player.rb;
+		di = player.body.AddComponent<DashCombat>();
+		di.dashing = false;
+		di.dash = this;
 
 		dashbar = new GameObject();
 		dashbar.name = "Dash Bar";
@@ -85,6 +91,8 @@ public class Dash : Combat
 		dashCharge = 0.5f;
 		dashDischarge = 13f;
 		dashing = false;
+
+		damage = 5;
 	}
 
 	public override void OnEnable()
@@ -150,6 +158,7 @@ public class Dash : Combat
 			player.DisableMovement();
 			dashlevelImg.color = Color.yellow;
 			dashing = true;
+			di.dashing = true;
 		}
 	}
 
@@ -158,5 +167,6 @@ public class Dash : Combat
 		settings.StartEnemyPhysicsCollisions();
 		player.EnableMovement();
 		dashing = false;
+		//di.dashing = false;
 	}
 }

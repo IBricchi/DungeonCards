@@ -7,8 +7,10 @@ using UnityEngine;
 public class SimpleFollower : Enemy
 {
 	// basic information
-	private int size = 1;
-	
+	private int size;
+
+	private GameObject playerGO;
+
 	private GameObject body;
 	public float speed;
 	private Vector2 moveDir;
@@ -24,10 +26,18 @@ public class SimpleFollower : Enemy
 	// player information
 	private Vector2 target;
 
+	public SimpleFollower(Settings settings, Player player):
+		base(settings, player) { }
+
 	public override void Awake()
 	{
 		// setup basic enemy information
-		Setup(size, true);
+		ID = EnemyID.simpleFollower;
+		size = 1;
+		Setup(size);
+
+		// player reference
+		playerGO = player.body;
 
 		// basic information
 		body = bodies[0];
@@ -38,6 +48,9 @@ public class SimpleFollower : Enemy
 
 		// physics
 		rb = rbs[0];
+
+		// game information
+		health = 12f;
 	}
 
 	protected override void SetupSprites()
@@ -49,8 +62,16 @@ public class SimpleFollower : Enemy
 
 	public override void FixedUpdate()
 	{
+		// check if dead
+		if(health <= 0)
+		{
+			alive = false;
+			UnityEngine.Object.Destroy(body);
+			settings.enemies.Remove(this);
+		}
+
 		// get player position
-		target = player.transform.position;
+		target = playerGO.transform.position;
 
 		// get movement info and move
 		moveDir = target - (Vector2) body.transform.position;

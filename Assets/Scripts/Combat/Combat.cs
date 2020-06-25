@@ -6,11 +6,12 @@ public abstract class Combat
 	protected Settings settings;
 
 	protected Player player;
-	protected Rigidbody2D playerRB;
 
 	protected GameObject canvasBody;
 
 	protected InputMaster c;
+
+	protected float damage;
 
 	protected Combat(Settings _settings, Player _player, GameObject _canvasBody)
 	{
@@ -23,4 +24,9 @@ public abstract class Combat
 	public abstract void OnEnable();
 	public abstract void OnDisable();
 	public abstract void FixedUpdate();
+
+	public virtual void DamageEnemy(Enemy enemy)
+	{
+		enemy.TakeDamage(damage);
+	}
 }
