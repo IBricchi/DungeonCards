@@ -29,7 +29,7 @@ public class Settings : MonoBehaviour
 	private void Awake()
 	{
 		// Get ID's for each component
-		moveID = MovementID.walk;
+		moveID = MovementID.fast;
 		enemyID = EnemyID.simpleFollower;
 		combatID = CombatID.dash;
 		terrainID = TerrainID.maze;
