@@ -36,10 +36,10 @@ public class Settings : MonoBehaviour
 
 		// setup round settings based on ID's
 		rs = new RoundSettings(moveID, enemyID, combatID, terrainID);
-		
+
 		// Setup Player
-		player = new Player();
-		player.Awake();
+		GameObject playerGO = new GameObject();
+		player = playerGO.AddComponent<Player>();
 		player.UpdateMovementSettings(rs.moveInfo);
 
 		// setup terrain
@@ -67,18 +67,15 @@ public class Settings : MonoBehaviour
 	}
 	private void OnEnable()
 	{
-		player.OnEnable();
 		combat.OnEnable();
 	}
 	private void OnDisable()
 	{
-		player.OnDisable();
 		combat.OnDisable();
 	}
 
 	private void FixedUpdate()
 	{
-		player.FixedUpdate();
 		combat.FixedUpdate();
 	}
 

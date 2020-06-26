@@ -13,7 +13,6 @@ public class SimpleFollower : Enemy
 	private Vector2 vel;
 
 	// player information
-	private GameObject playerGO;
 	private Vector2 target;
 
 	protected override void ChildAwake()
@@ -38,11 +37,6 @@ public class SimpleFollower : Enemy
 		gameObject.name = "Simple Follower";
 	}
 
-	protected override void ChildStart()
-	{
-		playerGO = player.body;
-	}
-
 	protected override void ChildFixedUpdate()
 	{
 		// check if dead
@@ -54,7 +48,7 @@ public class SimpleFollower : Enemy
 		}
 
 		// get player position
-		target = playerGO.transform.position;
+		target = player.gameObject.transform.position;
 
 		// get movement info and move
 		moveDir = target - (Vector2) gameObject.transform.position;

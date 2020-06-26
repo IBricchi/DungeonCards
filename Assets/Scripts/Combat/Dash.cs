@@ -40,7 +40,7 @@ public class Dash : Combat
 	public override void Awake()
 	{
 		playerRB = player.rb;
-		di = player.body.AddComponent<DashCombat>();
+		di = player.gameObject.AddComponent<DashCombat>();
 		di.dashing = false;
 		di.dash = this;
 
@@ -70,7 +70,7 @@ public class Dash : Combat
 
 		pointer = new GameObject();
 		pointer.name = "Dash Pointer";
-		pointer.transform.parent = player.body.transform;
+		pointer.transform.parent = player.gameObject.transform;
 		
 		pointerSprite = Resources.Load<Sprite>("Art/Combat/pointer");
 		pointerSR = pointer.AddComponent<SpriteRenderer>();

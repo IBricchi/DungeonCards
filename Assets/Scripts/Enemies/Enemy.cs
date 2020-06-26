@@ -34,7 +34,7 @@ public abstract class Enemy : MonoBehaviour
 		SetupSprites();
 		SetupPhysics();
 	}
-	protected abstract void ChildAwake();
+	protected virtual void ChildAwake() { }
 
 	// start function
 	public void Start()
@@ -46,7 +46,7 @@ public abstract class Enemy : MonoBehaviour
 		// setup child start
 		ChildStart();
 	}
-	protected abstract void ChildStart();
+	protected virtual void ChildStart() { }
 
 	// basic body setup with possible child extension
 	protected void SetupBody(){

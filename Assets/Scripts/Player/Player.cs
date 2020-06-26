@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player
+public class Player : MonoBehaviour
 {
-	public GameObject body;
-
 	private GameObject camBody;
 	private Camera cam;
 
@@ -35,18 +33,17 @@ public class Player
 	// overrides
 	private bool disableMovment = false;
 
-	public void Awake()
+	private void Awake()
 	{
-		body = new GameObject();
-		body.tag = "Player";
-		body.name = "Player";
-		body.layer = 8;
+		gameObject.tag = "Player";
+		gameObject.name = "Player";
+		gameObject.layer = 8;
 
 		c = new InputMaster();
 
 		camBody = new GameObject();
 		camBody.name = "Main Camera";
-		camBody.transform.parent = body.transform;
+		camBody.transform.parent = gameObject.transform;
 		camBody.transform.localPosition = new Vector3(0, 0, -30);
 		camBody.tag = "MainCamera";
 
@@ -54,15 +51,15 @@ public class Player
 		cam.orthographic = true;
 
 		idleSprite = Resources.Load<Sprite>("Art/Player/idle");
-		sr = body.AddComponent<SpriteRenderer>();
+		sr = gameObject.AddComponent<SpriteRenderer>();
 		sr.sprite = idleSprite;
 		sr.color = Color.red;
 	
-		rb = body.AddComponent<Rigidbody2D>();
+		rb = gameObject.AddComponent<Rigidbody2D>();
 		rb.freezeRotation = true;
 		rb.gravityScale = 0;
 		rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-		pc = body.AddComponent<PolygonCollider2D>();
+		pc = gameObject.AddComponent<PolygonCollider2D>();
 
 		// speed claculation variables
 		dir = Vector2.zero;
@@ -71,19 +68,19 @@ public class Player
 		moving = false;
 	}
 
-	public void OnEnable()
+	private void OnEnable()
 	{
 		c.Enable();
 		c.Player.Move.performed += ctx => StartMoving(ctx.ReadValue<Vector2>());
 		c.Player.Move.canceled += ctx => StopMoving(ctx.ReadValue<Vector2>());
 	}
 
-	public void OnDisable()
+	private void OnDisable()
 	{
 		c.Disable();
 	}
 
-	public void FixedUpdate()
+	private void FixedUpdate()
 	{
 		// change speed depending on movement type
 		if (moving)
