@@ -13,7 +13,7 @@ public class Settings : MonoBehaviour
 	
 	private RoundSettings rs;
 
-	private Player player;
+	public Player player;
 
 	private Terrain terrain;
 
@@ -61,8 +61,7 @@ public class Settings : MonoBehaviour
 		// setup enemies
 		enemies = new List<Enemy>();
 		for(int i = 0; i < terrain.GetEnemyCount(); i++){
-			enemies.Add(rs.CreateEnemy(this, player));
-			enemies[i].Awake();
+			enemies.Add(rs.CreateEnemy());
 		}
 		terrain.PositionEnemies(enemies.ToArray());
 	}
@@ -81,10 +80,6 @@ public class Settings : MonoBehaviour
 	{
 		player.FixedUpdate();
 		combat.FixedUpdate();
-		for (int i = enemies.Count - 1; i >= 0; i--)
-		{
-			enemies[i].FixedUpdate();
-		}
 	}
 
 	public void StopEnemyPhysicsCollisions()

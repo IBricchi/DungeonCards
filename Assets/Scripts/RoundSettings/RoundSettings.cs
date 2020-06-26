@@ -10,9 +10,9 @@ public struct RoundSettings{
 	readonly TerrainID terrainID;
 
 	public MovementInfo moveInfo; // TODO! replace with class creation later on
-	public Enemy CreateEnemy(Settings settings, Player player)
+	public Enemy CreateEnemy()
 	{
-		return EnemySettings.CreateEnemy(enemyID, settings, player);
+		return EnemySettings.CreateEnemy(enemyID);
 	}
 	public Combat SetupCombat(Settings settings, Player player, GameObject canvasBody)
 	{

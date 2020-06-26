@@ -16,16 +16,10 @@ public class SimpleFollower : Enemy
 	private GameObject playerGO;
 	private Vector2 target;
 
-	public SimpleFollower(Settings settings, Player player):
-		base(settings, player) { }
-
 	protected override void ChildAwake()
 	{
 		// setup basic enemy information
 		ID = EnemyID.simpleFollower;
-
-		// player reference
-		playerGO = player.body;
 
 		// basic information
 		speed = 100f;
@@ -41,7 +35,12 @@ public class SimpleFollower : Enemy
 
 	protected override void ChildSetupBody()
 	{
-		body.name = "Simple Follower";
+		gameObject.name = "Simple Follower";
+	}
+
+	protected override void ChildStart()
+	{
+		playerGO = player.body;
 	}
 
 	protected override void ChildFixedUpdate()
@@ -50,7 +49,7 @@ public class SimpleFollower : Enemy
 		if(health <= 0)
 		{
 			alive = false;
-			UnityEngine.Object.Destroy(body);
+			UnityEngine.Object.Destroy(gameObject);
 			settings.enemies.Remove(this);
 		}
 
@@ -58,11 +57,11 @@ public class SimpleFollower : Enemy
 		target = playerGO.transform.position;
 
 		// get movement info and move
-		moveDir = target - (Vector2) body.transform.position;
+		moveDir = target - (Vector2) gameObject.transform.position;
 		vel = moveDir / moveDir.magnitude * speed;
 		rb.velocity = vel * Time.fixedDeltaTime;
 
 		// get direction info and turn
-		body.transform.up = moveDir;
+		gameObject.transform.up = moveDir;
 	}
 }

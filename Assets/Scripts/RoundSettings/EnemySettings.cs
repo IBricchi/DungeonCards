@@ -5,7 +5,7 @@ using UnityEngine;
 
 public struct EnemySettings
 {
-	public static Enemy CreateEnemy(EnemyID id, Settings settings, Player player)
+	public static Enemy CreateEnemy(EnemyID id)
 	{
 		switch(id)
 		{
@@ -13,7 +13,8 @@ public struct EnemySettings
 				Debug.LogWarning("none enemy ID should never call Create Enemy, null returned");
 				return null;
 			case EnemyID.simpleFollower:
-				return new SimpleFollower(settings, player);
+				GameObject go = new GameObject();
+				return go.AddComponent<SimpleFollower>();
 			default:
 				Debug.LogWarning("non supported enemy ID called to Create Enemy, null retunred");
 				return null;

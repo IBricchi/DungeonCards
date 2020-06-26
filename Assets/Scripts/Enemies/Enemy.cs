@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy
+public abstract class Enemy : MonoBehaviour
 {
 	// ID of generated enemy, not unique for each instance but unique for each type of enemy
 	public EnemyID ID;
@@ -11,10 +11,6 @@ public abstract class Enemy
 	// basic references to player and settings
 	protected Settings settings;
 	protected Player player;
-	
-	// basic enemy components
-	protected GameObject body;
-	protected EnemyInfo enemyInfo;
 
 	// basic components used for 1 body components
 	protected Sprite idleSprite;
@@ -25,59 +21,57 @@ public abstract class Enemy
 	protected float health;
 	public bool alive;
 
-	public Enemy(Settings _settings, Player _player)
-	{
-		settings = _settings;
-		player = _player;
-	}
-
 	// awake function
 	public void Awake()
 	{
+		alive = true;
+
 		// sets up variables for the child
 		ChildAwake();
 
-		// sets up enemy components
-		Setup();
-	}
-	protected abstract void ChildAwake();
-
-	// setup basic enemy settings
-	public void Setup(){
-		alive = true;
+		// setup
 		SetupBody();
 		SetupSprites();
 		SetupPhysics();
 	}
+	protected abstract void ChildAwake();
+
+	// start function
+	public void Start()
+	{
+		// get settings player references
+		settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
+		player = settings.player;
+
+		// setup child start
+		ChildStart();
+	}
+	protected abstract void ChildStart();
 
 	// basic body setup with possible child extension
 	protected void SetupBody(){
-		body = new GameObject();
-		body.layer = 9;
-		body.tag = "Enemy";
-		enemyInfo = body.AddComponent<EnemyInfo>();
-		enemyInfo.enemy = this;
+		gameObject.layer = 9;
+		gameObject.tag = "Enemy";
 
 		ChildSetupBody();
 	}
 	protected virtual void ChildSetupBody() { }
-
 	// basic sprite setup for any enemy with only one body, virtual for child to overwrite
 	protected virtual void SetupSprites()
 	{
-		SpriteRenderer sr = body.AddComponent<SpriteRenderer>();
+		SpriteRenderer sr = gameObject.AddComponent<SpriteRenderer>();
 		sr.sprite = idleSprite;
 	}
-
 	// basic physics setup for any enemy with one body, virtual for child to overwrite
 	protected virtual void SetupPhysics()
 	{
-		rb = body.AddComponent<Rigidbody2D>();
+		rb = gameObject.AddComponent<Rigidbody2D>();
 		rb.gravityScale = 0;
 		rb.freezeRotation = true;
 
-		col = body.AddComponent<PolygonCollider2D>();
+		col = gameObject.AddComponent<PolygonCollider2D>();
 	}
+	protected virtual void SetupChild() { }
 
 	// fixed update calls child fixed update overloaded by child if needed
 	public void FixedUpdate()
