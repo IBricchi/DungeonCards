@@ -163,9 +163,13 @@ public class Player : MonoBehaviour
 	{
 		combat = _combat;
 	}
-	public void Attack()
+	public void Attack(Collider2D collider, Enemy enemy)
 	{
-		//combat.Attack();
+		combat.ColliderAttack(collider, enemy);
+	}
+	public void Attack(Collision2D collision, Enemy enemy)
+	{
+		combat.CollisionAttack(collision, enemy);
 	}
 
 	// override functions for other components to eddit

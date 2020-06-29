@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class Dash : Combat
 {
 	private Rigidbody2D playerRB;
-	private DashCombat di;
 
 	private GameObject dashbar;
 	private Sprite dashbarSprite;
@@ -40,9 +39,7 @@ public class Dash : Combat
 	public override void Awake()
 	{
 		playerRB = player.rb;
-		di = player.gameObject.AddComponent<DashCombat>();
-		di.dashing = false;
-		di.dash = this;
+		player.gameObject.AddComponent<DashCollision>();
 
 		dashbar = new GameObject();
 		dashbar.name = "Dash Bar";
@@ -150,6 +147,7 @@ public class Dash : Combat
 		pointerPos = pos / pos.magnitude;
 	}
 
+	// attacking functions
 	private void StartAttack()
 	{
 		if (remainingDash == dashTime)
@@ -158,15 +156,17 @@ public class Dash : Combat
 			player.DisableMovement();
 			dashlevelImg.color = Color.yellow;
 			dashing = true;
-			di.dashing = true;
 		}
 	}
-
 	private void StopAttack()
 	{
 		settings.StartEnemyPhysicsCollisions();
 		player.EnableMovement();
 		dashing = false;
 		//di.dashing = false;
+	}
+	public override void ColliderAttack(Collider2D collider, Enemy enemy)
+	{
+		enemy.TakeDamage(collider, damage);
 	}
 }

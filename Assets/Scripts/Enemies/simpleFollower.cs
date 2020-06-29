@@ -58,4 +58,14 @@ public class SimpleFollower : Enemy
 		// get direction info and turn
 		gameObject.transform.up = moveDir;
 	}
+
+	// take damage overloads
+	public override void TakeDamage(Collider2D collider, float damage)
+	{
+		health -= damage;
+	}
+	public override void TakeDamage(Collision2D collision, float damage)
+	{
+		health -= damage;
+	}
 }

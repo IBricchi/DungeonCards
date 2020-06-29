@@ -164,5 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2c92d41bbd02e42b66db61a00e8815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  moveID: 0
+  combatID: 1
+  enemyID: 1
+  terrainID: 1
   enemies: []

@@ -41,7 +41,7 @@ public abstract class Enemy : MonoBehaviour
 	{
 		// get settings player references
 		settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
-		player = settings.player;
+		player = settings.GetPlayer();
 
 		// setup child start
 		ChildStart();
@@ -102,8 +102,6 @@ public abstract class Enemy : MonoBehaviour
 	}
 
 	// basic damage for enemies, if more complex damange control is required overload
-	public virtual void TakeDamage(float damage)
-	{
-		health -= damage;
-	}
+	public abstract void TakeDamage(Collider2D collider, float damage); // this one is used when isTrigger is on
+	public abstract void TakeDamage(Collision2D collision, float damage); // this one is used when isTrigger is off
 }

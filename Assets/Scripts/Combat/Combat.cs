@@ -25,8 +25,12 @@ public abstract class Combat
 	public abstract void OnDisable();
 	public abstract void FixedUpdate();
 
-	public virtual void DamageEnemy(Enemy enemy)
+	public virtual void ColliderAttack(Collider2D collider, Enemy enemy)
 	{
-		enemy.TakeDamage(damage);
+		throw new System.NotImplementedException();
+	}
+	public virtual void CollisionAttack(Collision2D collision, Enemy enemy)
+	{
+		throw new System.NotImplementedException();
 	}
 }

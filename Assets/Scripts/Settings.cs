@@ -13,7 +13,7 @@ public class Settings : MonoBehaviour
 	
 	private RoundSettings rs;
 
-	public Player player;
+	private Player player;
 
 	private Terrain terrain;
 
@@ -89,5 +89,10 @@ public class Settings : MonoBehaviour
 		{
 			enemy.StartPhysicsCollisions();
 		}
+	}
+
+	public Player GetPlayer()
+	{
+		return player;
 	}
 }
