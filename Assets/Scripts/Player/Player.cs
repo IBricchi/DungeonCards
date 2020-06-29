@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
 	private Vector2 vel;
 	private float speed;
 
+	// combat information
+	Combat combat;
+
 	// overrides for external control
 	private bool disableMovment = false;
 
@@ -127,6 +130,8 @@ public class Player : MonoBehaviour
 			vel = lastDir * speed;
 			rb.velocity = vel;
 		}
+
+		combat.FixedUpdate();
 	}
 
 	public void UpdateMovementSettings(MovementInfo _moveSettings) // this is going to be replaced later when player is turned into a base class which will have specific movement classes inherit from it
@@ -151,6 +156,16 @@ public class Player : MonoBehaviour
 	{
 		moving = false;
 		dir = _dir;
+	}
+
+	// combat
+	public void GiveCombat(Combat _combat)
+	{
+		combat = _combat;
+	}
+	public void Attack()
+	{
+		//combat.Attack();
 	}
 
 	// override functions for other components to eddit

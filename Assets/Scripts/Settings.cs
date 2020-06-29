@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-	private MovementID moveID;
-	private CombatID combatID;
-	private EnemyID enemyID;
-	private TerrainID terrainID;
+	public MovementID moveID;
+	public CombatID combatID;
+	public EnemyID enemyID;
+	public TerrainID terrainID;
 	
 	private RoundSettings rs;
 
@@ -29,10 +29,10 @@ public class Settings : MonoBehaviour
 	private void Awake()
 	{
 		// Get ID's for each component
-		moveID = MovementID.fast;
-		enemyID = EnemyID.simpleFollower;
-		combatID = CombatID.dash;
-		terrainID = TerrainID.maze;
+		//moveID = MovementID.walk;
+		//enemyID = EnemyID.simpleFollower;
+		//combatID = CombatID.dash;
+		//terrainID = TerrainID.maze;
 
 		// setup round settings based on ID's
 		rs = new RoundSettings(moveID, enemyID, combatID, terrainID);
@@ -57,6 +57,7 @@ public class Settings : MonoBehaviour
 		// setup combat
 		combat = rs.SetupCombat(this, player, canvasBody);
 		combat.Awake();
+		player.GiveCombat(combat);
 
 		// setup enemies
 		enemies = new List<Enemy>();
@@ -72,11 +73,6 @@ public class Settings : MonoBehaviour
 	private void OnDisable()
 	{
 		combat.OnDisable();
-	}
-
-	private void FixedUpdate()
-	{
-		combat.FixedUpdate();
 	}
 
 	public void StopEnemyPhysicsCollisions()
