@@ -56,7 +56,6 @@ public class Settings : MonoBehaviour
 
 		// setup combat
 		combat = rs.SetupCombat(this, player, canvasBody);
-		combat.Awake();
 		player.GiveCombat(combat);
 
 		// setup enemies
@@ -65,14 +64,6 @@ public class Settings : MonoBehaviour
 			enemies.Add(rs.CreateEnemy());
 		}
 		terrain.PositionEnemies(enemies.ToArray());
-	}
-	private void OnEnable()
-	{
-		combat.OnEnable();
-	}
-	private void OnDisable()
-	{
-		combat.OnDisable();
 	}
 
 	public void StopEnemyPhysicsCollisions()
@@ -94,5 +85,9 @@ public class Settings : MonoBehaviour
 	public Player GetPlayer()
 	{
 		return player;
+	}
+	public GameObject GetCanvas()
+	{
+		return canvasBody;
 	}
 }

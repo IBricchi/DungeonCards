@@ -130,8 +130,6 @@ public class Player : MonoBehaviour
 			vel = lastDir * speed;
 			rb.velocity = vel;
 		}
-
-		combat.FixedUpdate();
 	}
 
 	public void UpdateMovementSettings(MovementInfo _moveSettings) // this is going to be replaced later when player is turned into a base class which will have specific movement classes inherit from it
@@ -158,18 +156,10 @@ public class Player : MonoBehaviour
 		dir = _dir;
 	}
 
-	// combat
+	// setup combat
 	public void GiveCombat(Combat _combat)
 	{
 		combat = _combat;
-	}
-	public void Attack(Collider2D collider, Enemy enemy)
-	{
-		combat.ColliderAttack(collider, enemy);
-	}
-	public void Attack(Collision2D collision, Enemy enemy)
-	{
-		combat.CollisionAttack(collision, enemy);
 	}
 
 	// override functions for other components to eddit

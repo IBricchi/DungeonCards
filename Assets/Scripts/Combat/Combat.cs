@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Combat
+public abstract class Combat : MonoBehaviour
 {
 	protected Settings settings;
 
@@ -13,23 +13,43 @@ public abstract class Combat
 
 	protected float damage;
 
-	protected Combat(Settings _settings, Player _player, GameObject _canvasBody)
+	// setsup variables on initialisation
+	protected virtual void Awake()
 	{
-		settings = _settings;
-		player = _player;
-		canvasBody = _canvasBody;
+		// setup new controls
+		c = new InputMaster();
 	}
 
-	public abstract void Awake();
-	public abstract void OnEnable();
-	public abstract void OnDisable();
-	public abstract void FixedUpdate();
+	protected virtual void Start()
+	{
+		// get settings player references
+		settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
+		player = settings.GetPlayer();
+		canvasBody = settings.GetCanvas();
+	}
 
-	public virtual void ColliderAttack(Collider2D collider, Enemy enemy)
+	// generally setup for controls
+	protected virtual void OnEnable()
+	{
+		// enable control scheme
+		c.Enable();
+	}
+	
+	protected virtual void OnDisable()
+	{
+		// disable control scheme
+		c.Disable();
+	}
+
+	// all physics should go in here
+	protected virtual void FixedUpdate() { }
+
+	// information for attacking, used to pass infomration onto enemy
+	public virtual void ColliderAttack(Collider2D collider, Enemy enemy) // used when is trigger = true
 	{
 		throw new System.NotImplementedException();
 	}
-	public virtual void CollisionAttack(Collision2D collision, Enemy enemy)
+	public virtual void CollisionAttack(Collision2D collision, Enemy enemy) // used when is trigger = false
 	{
 		throw new System.NotImplementedException();
 	}

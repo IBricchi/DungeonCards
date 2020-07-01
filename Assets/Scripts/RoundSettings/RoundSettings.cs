@@ -16,7 +16,7 @@ public struct RoundSettings{
 	}
 	public Combat SetupCombat(Settings settings, Player player, GameObject canvasBody)
 	{
-		return CombatSettings.PickCombat(combatID, settings, player, canvasBody);
+		return CombatSettings.PickCombat(combatID, player);
 	}
 	public Terrain SetupTerrain(Settings settings, Player player)
 	{
