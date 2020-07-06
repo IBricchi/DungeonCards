@@ -21,9 +21,9 @@ public struct RoundSettings{
 	{
 		return CombatSettings.PickCombat(combatID, player);
 	}
-	public Terrain SetupTerrain(Settings settings, Player player)
+	public Terrain SetupTerrain()
 	{
-		return TerrainSettings.PickTerrain(terrainID, settings, player);
+		return TerrainSettings.PickTerrain(terrainID);
 
 	}
 

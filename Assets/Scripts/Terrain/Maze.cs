@@ -16,38 +16,46 @@ public class Maze : Terrain
 
 	private MazeGen maze;
 
-	public Maze(Settings _settings, Player _player)
-		: base(_settings, _player) { }
-
-	public override void Awake()
+	protected override void Awake()
 	{
+		base.Awake();	
+
+		// setup enemy count
 		enemyCount = 10;
 
+		// setup size of maze
 		sizex = 10;
 		sizey = 10;
 
+		// setup dimentions of walls and cooridors
 		corridorWidth = 7;
 		wallWidth = 3;
 
+		// create new maze object
 		mazeBody = new GameObject();
 		mazeBody.name = "Maze";
 
+		// initialise wall informaton
 		walls = new List<GameObject>();
-
 		wallSprite = Resources.Load<Sprite>("Art/Terrain/Maze/basic");
 
+		// generate maze information using helper class
 		maze = new MazeGen(sizex, sizey);
+
+		// turn maze information into game objects
 		GameObject lastWall;
 		for (int y = 0; y < sizey; y++)
 		{
 			for (int x = 0; x < sizex; x++)
 			{
+				// checks if there is a wall at the bottom position
 				if (maze[x, y].HasFlag(CellState.Top))
 				{
 					lastWall = new GameObject();
 					lastWall = SetupWall(lastWall, corridorWidth + wallWidth, wallWidth, corridorWidth * x, corridorWidth * y - corridorWidth / 2);
 					walls.Add(lastWall);
 				}
+				// checks if ther is a wall on the right posision
 				if (maze[x, y].HasFlag(CellState.Left))
 				{
 					lastWall = new GameObject();
@@ -57,6 +65,7 @@ public class Maze : Terrain
 			}
 		}
 
+		// generates top and right outer walls
 		lastWall = new GameObject();
 		lastWall = SetupWall(lastWall, corridorWidth * sizex + wallWidth, wallWidth, corridorWidth * sizex / 2 - corridorWidth / 2, corridorWidth * sizey - corridorWidth / 2);
 		walls.Add(lastWall);
@@ -66,6 +75,8 @@ public class Maze : Terrain
 		walls.Add(lastWall);
 	}
 
+	// setup wall helper function for generating wall game objects
+	// TODO! replace with prefabs
 	private GameObject SetupWall(GameObject wall, float width, float height, float posx, float posy)
 	{
 		wall.transform.SetParent(mazeBody.transform);
@@ -78,13 +89,15 @@ public class Maze : Terrain
 		return wall;
 	}
 
-	public override int GetEnemyCount()
+	protected override void Start()
 	{
-		return enemyCount;
+		base.Start();
 	}
 
-	public override void PositionEnemies(Enemy[] enemies)
+	// sets position of all enemis
+	public override void InitialPositionEnemies(List<Enemy> enemies)
 	{
+		// randomly allocates a position for each enemy
 		foreach(Enemy enemy in enemies)
 		{
 			enemy.SetPosition(

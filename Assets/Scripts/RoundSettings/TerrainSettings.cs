@@ -4,7 +4,7 @@ using System.Collections;
 // static instance to create the right type of terrain from an ID
 public struct TerrainSettings
 {
-	public static Terrain PickTerrain(TerrainID id, Settings settings, Player player)
+	public static Terrain PickTerrain(TerrainID id)
 	{
 		// switch statment returns the correct type of terrain object based on the combat ID
 		switch (id)
@@ -13,7 +13,8 @@ public struct TerrainSettings
 				Debug.Log("Terrain ID Open called, not yet implemented, null retunred");
 				return null;
 			case TerrainID.maze:
-				return new Maze(settings, player);
+				GameObject go = new GameObject();
+				return go.AddComponent<Maze>();
 			default:
 				Debug.Log("Uknown Terrain ID called, null retunred");
 				return null;

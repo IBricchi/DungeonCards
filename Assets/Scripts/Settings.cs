@@ -48,8 +48,7 @@ public class Settings : MonoBehaviour
 		player.UpdateMovementSettings(rs.moveInfo);
 
 		// setup terrain
-		terrain = rs.SetupTerrain(this, player);
-		terrain.Awake();
+		terrain = rs.SetupTerrain();
 
 		// setup overall canvas
 		canvasBody = new GameObject();
@@ -68,7 +67,7 @@ public class Settings : MonoBehaviour
 		for(int i = 0; i < terrain.GetEnemyCount(); i++){
 			enemies.Add(rs.CreateEnemy());
 		}
-		terrain.PositionEnemies(enemies.ToArray());
+		terrain.InitialPositionEnemies(enemies);
 	}
 
 	// calls stopPhysicsCollisions on all enemies
