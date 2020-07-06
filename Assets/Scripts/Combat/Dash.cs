@@ -4,20 +4,22 @@ using UnityEngine.UI;
 
 public class Dash : Combat
 {
+	// player info
 	private Rigidbody2D playerRB;
 
+	// variables for dashbar
 	private GameObject dashbar;
 	private Sprite dashbarSprite;
 	private Image dashbarImg;
 	private CanvasRenderer dashbarCR;
 	private RectTransform dashbarRT;
-
 	private GameObject dashlevel;
 	private Sprite dashlevelSprite;
 	private Image dashlevelImg;
 	private CanvasRenderer dashlevelCR;
 	private RectTransform dashlevelRT;
 
+	// variables for pointer
 	private GameObject pointer;
 	private Sprite pointerSprite;
 	private SpriteRenderer pointerSR;

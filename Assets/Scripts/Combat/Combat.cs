@@ -3,14 +3,15 @@ using System.Collections;
 
 public abstract class Combat : MonoBehaviour
 {
+	// referebces to main game obects
 	protected Settings settings;
-
 	protected Player player;
-
 	protected GameObject canvasBody;
 
+	// control scheme
 	protected InputMaster c;
 
+	// basic damagae variable (probably will be used as max damage in most occasions)
 	protected float damage;
 
 	// setsup variables on initialisation

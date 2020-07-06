@@ -6,25 +6,30 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
+	// basic id's for the game
 	public MovementID moveID;
 	public CombatID combatID;
 	public EnemyID enemyID;
 	public TerrainID terrainID;
 	
+	// round settings
 	private RoundSettings rs;
 
+	// player
 	private Player player;
-
+	private Combat combat;
+	
+	// terrain
 	private Terrain terrain;
 
+	// canvas
 	private GameObject canvasBody;
 	private Canvas canvas;
 	private CanvasScaler canvasScaler;
 	private GraphicRaycaster canvasGR;
-
+	
+	// enemies list
 	public List<Enemy> enemies;
-
-	private Combat combat;
 
 	private void Awake()
 	{
@@ -66,6 +71,8 @@ public class Settings : MonoBehaviour
 		terrain.PositionEnemies(enemies.ToArray());
 	}
 
+	// calls stopPhysicsCollisions on all enemies
+	// used for physical attacks
 	public void StopEnemyPhysicsCollisions()
 	{
 		foreach(Enemy enemy in enemies)
@@ -74,6 +81,8 @@ public class Settings : MonoBehaviour
 		}
 	}
 
+	// calls startPhysicsCOllisions on all enemies
+	// used for physical attacks
 	public void StartEnemyPhysicsCollisions()
 	{
 		foreach(Enemy enemy in enemies)
@@ -82,6 +91,7 @@ public class Settings : MonoBehaviour
 		}
 	}
 
+	// access important game objects
 	public Player GetPlayer()
 	{
 		return player;
