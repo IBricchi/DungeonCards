@@ -59,7 +59,7 @@ public class Settings : MonoBehaviour
 		canvasGR = canvasBody.AddComponent<GraphicRaycaster>();
 
 		// setup combat
-		combat = rs.SetupCombat(this, player, canvasBody);
+		combat = rs.GiveCombat(player);
 		player.GiveCombat(combat);
 
 		// setup enemies

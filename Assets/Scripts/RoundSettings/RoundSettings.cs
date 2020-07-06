@@ -17,7 +17,7 @@ public struct RoundSettings{
 	{
 		return EnemySettings.CreateEnemy(enemyID);
 	}
-	public Combat SetupCombat(Settings settings, Player player, GameObject canvasBody)
+	public Combat GiveCombat(Player player)
 	{
 		return CombatSettings.PickCombat(combatID, player);
 	}

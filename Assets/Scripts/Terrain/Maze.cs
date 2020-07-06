@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Maze : Terrain
 {
+	// basic maze objects
 	private GameObject mazeBody;
 	private List<GameObject> walls;
 	private Sprite wallSprite;
 
+	// basic maze variables
 	private float corridorWidth;
 	private float wallWidth;
-
 	private int sizex;
 	private int sizey;
 
+	// maze information helper class
 	private MazeGen maze;
 
 	protected override void Awake()
@@ -34,6 +36,7 @@ public class Maze : Terrain
 		// create new maze object
 		mazeBody = new GameObject();
 		mazeBody.name = "Maze";
+		mazeBody.tag = "Terrain";
 
 		// initialise wall informaton
 		walls = new List<GameObject>();
@@ -52,6 +55,7 @@ public class Maze : Terrain
 				if (maze[x, y].HasFlag(CellState.Top))
 				{
 					lastWall = new GameObject();
+					lastWall.name = "Wall";
 					lastWall = SetupWall(lastWall, corridorWidth + wallWidth, wallWidth, corridorWidth * x, corridorWidth * y - corridorWidth / 2);
 					walls.Add(lastWall);
 				}
@@ -59,6 +63,7 @@ public class Maze : Terrain
 				if (maze[x, y].HasFlag(CellState.Left))
 				{
 					lastWall = new GameObject();
+					lastWall.name = "Wall";
 					lastWall = SetupWall(lastWall, wallWidth, corridorWidth + wallWidth, corridorWidth * x - corridorWidth / 2, corridorWidth * y);
 					walls.Add(lastWall);
 				}
@@ -67,10 +72,12 @@ public class Maze : Terrain
 
 		// generates top and right outer walls
 		lastWall = new GameObject();
+		lastWall.name = "Wall";
 		lastWall = SetupWall(lastWall, corridorWidth * sizex + wallWidth, wallWidth, corridorWidth * sizex / 2 - corridorWidth / 2, corridorWidth * sizey - corridorWidth / 2);
 		walls.Add(lastWall);
 
 		lastWall = new GameObject();
+		lastWall.name = "Wall";
 		lastWall = SetupWall(lastWall, wallWidth, corridorWidth * sizey + wallWidth, corridorWidth * sizex - corridorWidth / 2, corridorWidth * sizey / 2 - corridorWidth / 2);
 		walls.Add(lastWall);
 	}
